@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.lang.Character.UnicodeBlock;
+
+import org.stathissideris.ascii2image.core.WideChar;
 
 /**
  * 
@@ -98,14 +101,14 @@ public class FileUtils {
 	}
 
 	public static String readFile(InputStream is, String name, String encoding, long length) throws IOException {
-
+                WideChar wide_char = new WideChar();
 		if (length < 0) {
 			LineNumberReader reader = new LineNumberReader(new InputStreamReader(is));
 			StringBuilder builder = new StringBuilder();
 			while (true) {
 				String line = reader.readLine();
 				if (line == null) break;
-				else builder.append(line).append("\n");
+				else builder.append(wide_char.convert(line)).append("\n");
 			}
 			return builder.toString();
 		}
